@@ -19,11 +19,13 @@ jobs:
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
           changed-files: 'true'
+          src: repo
           args: 'check repo --config config/ruff.toml'
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
           changed-files: 'true'
-          args: 'format --check repo --config config/ruff.toml'
+          src: repo
+          args: 'format --check --config config/ruff.toml'
   pyright:
     runs-on: ubuntu-latest
     steps:
