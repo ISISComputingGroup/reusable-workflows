@@ -14,7 +14,7 @@ jobs:
           path: repo
       - uses: actions/checkout@v4
         with:
-          repo: ISISComputingGroup/reusable-workflows
+          repository: ISISComputingGroup/reusable-workflows
           path: config
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
