@@ -20,7 +20,7 @@ jobs:
         with: 
           changed-files: 'true'
           src: repo
-          args: 'check repo --config config/ruff.toml'
+          args: 'check --config config/ruff.toml'
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
           changed-files: 'true'
