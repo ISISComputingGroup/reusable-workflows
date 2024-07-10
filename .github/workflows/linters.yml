@@ -2,9 +2,6 @@ name: Linters
 on: 
    workflow_call:
     inputs:
-      config-path:
-        required: true
-        type: string
       compare-branch:
         required: true
         type: string      
@@ -13,14 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: repo
+      - uses: actions/checkout@v4
+        with:
+          repo: ISISComputingGroup/reusable-workflows
+          path: config
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
           changed-files: 'true'
-          args: 'check --config ${{ inputs.config-path }}'
+          args: 'check repo --config config/ruff.toml'
       - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
         with: 
           changed-files: 'true'
-          args: 'format --check --config ${{ inputs.config-path }}'
+          args: 'format --check repo --config config/ruff.toml'
   pyright:
     runs-on: ubuntu-latest
     steps:
