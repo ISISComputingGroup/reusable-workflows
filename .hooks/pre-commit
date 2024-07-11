@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# To install ruff checks on .py files globally:
+# git config --global core.hooksPath "/c/Instrument/dev/reusable-workflows/.hooks"
+#
+set -e
+
+# Run local pre-commit hooks if defined
+if [ -f "$(git rev-parse --git-dir)/hooks/pre-commit" ]; then
+   . "$(git rev-parse --git-dir)/hooks/pre-commit"
+fi
+
+RUFF="/c/Instrument/Apps/Python3/Scripts/ruff"
+RUFF_CONFIG="/c/Instrument/dev/reusable-workflows/ruff.toml"
+
+git diff --cached --name-only --diff-filter=ACM -z | grep -zZE ".py$" | xargs -0 --no-run-if-empty $RUFF format --check --config $RUFF_CONFIG
+git diff --cached --name-only --diff-filter=ACM -z | grep -zZE ".py$" | xargs -0 --no-run-if-empty $RUFF check --config $RUFF_CONFIG
