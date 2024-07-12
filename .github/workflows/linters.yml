@@ -14,14 +14,11 @@ jobs:
         with:
           repository: ISISComputingGroup/reusable-workflows
           path: .ibex-shared-workflows
-      - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
-        with: 
-          changed-files: 'true'
-          args: 'check --config .ibex-shared-workflows/ruff.toml'
-      - uses: chartboost/ruff-action@491342200cdd1cf4d5132a30ddc546b3b5bc531b
-        with: 
-          changed-files: 'true'
-          args: 'format --check --config .ibex-shared-workflows/ruff.toml'
+
+      - name: Run Ruff Check on Changed Files
+        run: git diff --cached --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty $RUFF check --config .ibex-shared-workflows/ruff.toml
+      - name: Run Ruff Format Check on Changed Files 
+        run: git diff --cached --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty $RUFF format --check --config .ibex-shared-workflows/ruff.toml
   pyright:
     runs-on: ubuntu-latest
     steps:
