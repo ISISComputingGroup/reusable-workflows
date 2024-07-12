@@ -9,16 +9,24 @@ jobs:
   ruff:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-python@v5
+        with:
+           python-version: '3.10'
+      - run: pip install ruff
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/checkout@v4
         with:
           repository: ISISComputingGroup/reusable-workflows
           path: .ibex-shared-workflows
-
+      - name: Changed Files
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty echo
       - name: Run Ruff Check on Changed Files
-        run: git diff --cached --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty $RUFF check --config .ibex-shared-workflows/ruff.toml
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config .ibex-shared-workflows/ruff.toml
       - name: Run Ruff Format Check on Changed Files 
-        run: git diff --cached --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty $RUFF format --check --config .ibex-shared-workflows/ruff.toml
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config .ibex-shared-workflows/ruff.toml
   pyright:
     runs-on: ubuntu-latest
     steps:
