@@ -26,6 +26,7 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "uk.ac.stfc.isis.ibex.opis",
 ]
 
 # Set the maximum line length to 100.
@@ -35,7 +36,7 @@ indent-width = 4
 [lint]
 extend-select = [
     "N",  # pep8-naming
-    "D",  # pydocstyle
+    # "D",  # pydocstyle (can use this later but for now causes too many errors)
     "I",  # isort (for imports)
     "E501",  # Line too long ({width} > {limit})
     "E",
