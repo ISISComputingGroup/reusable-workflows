@@ -24,8 +24,9 @@ jobs:
       - name: Changed Files
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty echo
       - name: Run Ruff Check on Changed Files
-        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config .ibex-shared-workflows/ruff.toml
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config .ibex-shared-workflows/ruff.toml --output-format=github
       - name: Run Ruff Format Check on Changed Files 
+        if: success() || failure()
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config .ibex-shared-workflows/ruff.toml
   pyright:
     runs-on: ubuntu-latest
