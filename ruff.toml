@@ -51,7 +51,7 @@ ignore = [
     "ANN102",  # ignore this until its removed in future versions
 ]
 [lint.per-file-ignores]
-"*/tests/*" = [
+"{**/tests/**,/tests/**,**/*tests.py,tests/**,*tests.py}" = [
     "N802",
     "D100",
     "D101",
