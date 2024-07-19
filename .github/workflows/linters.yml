@@ -22,7 +22,6 @@ jobs:
            python-version: ${{ env.PY_VER }}
       - run: pip install ruff
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # If no local ruff.toml exists fetch the default config from reusable workflows.
