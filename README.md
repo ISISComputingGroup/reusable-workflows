@@ -4,7 +4,7 @@ The linters.yml workflow file adds a linter workflow for python that runs a ruff
 ### Ruff
 The Ruff linter checks for a local `ruff.toml` in the root of the repository, if it does not find one it fetches the default defined in this repository. It then runs a git-diff to get a list of changed files that it runs `ruff check` and `ruff format --check` on.
 #### ruff.toml
-The `fuff.toml` file used by default uses the following linter settings:
+The `ruff.toml` file used by default uses the following linter settings:
 Line length of 100, indent width of 4.
 |Code| Explanation|
 |:---:|------------|
