@@ -2,8 +2,8 @@
 ## Linters.yml
 The linters.yml workflow file adds a linter workflow for python that runs a ruff check, ruff format check, and pyright on _changed_ files on a specified python version. This workflow is designed to be on pullrequest, but could also be ran at push etc.
 The linters workflow takes the following arguements:
- - compare-branch - This arguement is required, and it expects a string telling it what branch to compare against (usually `origin/master` or `origin/main`).
- - python-ver - This argument is optional, it requires a string setting the python version to use, it defaults to `3.10`.
+ - `compare-branch` - This arguement is required, and it expects a string telling it what branch to compare against (usually `origin/master` or `origin/main`).
+ - `python-ver` - This argument is optional, it requires a string setting the python version to use, it defaults to `3.10`.
 ### Ruff
 The Ruff linter checks for a local `ruff.toml` in the root of the repository, if it does not find one it fetches the default defined in this repository. It then runs a git-diff to get a list of changed files that it runs `ruff check` and `ruff format --check` on.
 #### ruff.toml
