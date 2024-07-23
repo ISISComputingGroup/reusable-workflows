@@ -33,7 +33,7 @@ jobs:
           path: .ibex-shared-workflows
       # If a local config exists set the config to be the environment variable so it is properly used.
       - name: Use local config.
-        if:  ${{ hashFiles("ruff.toml") != ""}}
+        if:  ${{ hashFiles('ruff.toml') != ''}}
         run: |
           echo "CONFIG=ruff.toml" >> $GITHUB_ENV
       - name: Changed Files
