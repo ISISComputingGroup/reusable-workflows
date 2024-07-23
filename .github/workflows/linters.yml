@@ -27,7 +27,7 @@ jobs:
       # If no local ruff.toml exists fetch the default config from reusable workflows.
       - name: Use default config
         uses: actions/checkout@v4
-        if: ${{ hashFiles("ruff.toml") == ""}}
+        if: ${{ hashFiles('ruff.toml') == ''}}
         with:
           repository: ISISComputingGroup/reusable-workflows
           path: .ibex-shared-workflows
