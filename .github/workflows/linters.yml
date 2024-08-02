@@ -41,7 +41,7 @@ jobs:
       - name: Run Ruff Check on Changed Files
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config ${{ env.CONFIG }} --output-format=github
       - name: Run Ruff Format Check on Changed Files 
-        if: success() || failure()
+        if: success() || failure()  # Run the format check even if the previous check fails (but not always, as should not run on a failed build.)
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config ${{ env.CONFIG }}
   pyright:
     runs-on: ubuntu-latest
@@ -63,4 +63,4 @@ jobs:
       - name: install pyright_plugin
         run: pip install git+https://github.com/DiamondLightSource/pyright_diff_quality_plugin.git
       - name: Run Pyright on changes
-        run: diff-quality --violations=pyright --compare-branch ${{ inputs.compare-branch }}
+        run: diff-quality --violations=pyright --fail-under=100 --compare-branch ${{ inputs.compare-branch }}
