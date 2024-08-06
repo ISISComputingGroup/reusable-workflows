@@ -27,6 +27,7 @@ exclude = [
     "site-packages",
     "venv",
     "uk.ac.stfc.isis.ibex.opis",
+    "ReflectometryServer/test_modules/test_config/"
 ]
 
 # Set the maximum line length to 100.
