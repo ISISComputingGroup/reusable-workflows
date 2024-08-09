@@ -63,7 +63,7 @@ jobs:
       - name: install pyright_plugin
         run: pip install git+https://github.com/DiamondLightSource/pyright_diff_quality_plugin.git
       - name: install project dependencies (pyproject.toml)
-        run: pip install .
+        run: pip install .[dev]
         if: ${{ hashFiles('pyproject.toml') != ''}}
       - name: install project dependencies (requirements.txt)
         run: pip install -r requirements.txt
