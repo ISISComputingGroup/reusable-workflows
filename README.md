@@ -43,3 +43,84 @@ We also ignore the following  rules on test files as they should have self-docum
 
 ### Pyright
 The Pyright linter uses diff_cover and the [pyright diff-cover plugin](https://github.com/DiamondLightSource/pyright_diff_quality_plugin) to run pyright on files that have changed.
+
+## sphinx.yml
+This workflow exists for building sphinx documentation and publishing it to the github pages of the "caller" repo. 
+
+
+### Using the workflow
+
+to use, your caller sphinx.yml needs to look something like this: 
+
+```yaml
+name: sphinx
+on: [push, workflow_call]
+jobs:
+  call_sphinx_builder:
+    uses: ISISComputingGroup/reusable-workflows/.github/workflows/sphinx.yml@main
+    secrets: inherit
+```
+
+You also need to give "write" permission for github actions, this is done for each repository in the repo settings on Github. 
+
+This workflow requires a `pyproject.toml` file containing a `doc` optional dependency section, like so: 
+
+```toml
+... 
+[project.optional-dependencies]
+doc = [
+    "sphinx", 
+    "sphinx_rtd_theme", 
+    "myst_parser",
+]
+```
+
+Note that the above three are the bare minimum needed for this workflow. This is specified in the "caller" repo as the documentation for that repository may require more sphinx plugins etc. 
+
+### Documentation structure
+The documentation should be stored in `doc/` of the "caller" repo, which needs two files in the root (along with normal markdown files): 
+
+(where `some-feature.md` and `another-feature.md` are located in `doc/`)
+
+`index.rst`: 
+```rst
+Welcome to Example's documentation!
+===================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   some-feature.md
+   another-feature.md
+```
+which forms the homepage of the doc site,
+
+and 
+
+`conf.py`: 
+
+```python
+project = 'Example'
+copyright = 'workshop participant'
+author = 'workshop participant'
+release = '0.1'
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+extensions = ['myst_parser']
+
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
+```
+
+which is the sphinx configuration file.
+
+
