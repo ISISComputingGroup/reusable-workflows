@@ -54,6 +54,8 @@ The git hook will respect the settings in repo-local `ruff.toml` files, and like
 
 It will also respect any other pre-commit hooks defined in the repository.
 
+Note that if you then need to explicitly bypass these checks (e.g. you are committing to an external repository that does not use our coding standards), you will then need to pass `--no-verify` to your `git commit` commands to disable git hooks.
+
 #### Local configuration: convenience script
 
 There is a script, `r.bat`, in `./scripts` that will invoke ruff for convenience. Like the git hook, it respects repo-local `ruff.toml` files.
