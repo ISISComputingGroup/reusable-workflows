@@ -41,6 +41,37 @@ We also ignore the following  rules on test files as they should have self-docum
 |D102 | Missing docstring in public method |
 |E501 | Line too long. |
 
+#### Local configuration: git hook
+
+A git hook is available in the `.hooks` folder of this repository, which calls ruff on any modified python files on commit, and will prevent commiting if ruff checks fail.
+
+The pre-commit hook assumes that you have checked out the `reusable-workflows` repository to `c:\instrument\dev\reusable-workflows`. To enable the hook globally on your machine, run:
+```
+git config --global core.hooksPath "/c/Instrument/dev/reusable-workflows/.hooks"
+```
+
+The git hook will respect the settings in repo-local `ruff.toml` files, and like the build server, will only check modified files. 
+
+It will also respect any other pre-commit hooks defined in the repository.
+
+Note that if you then need to explicitly bypass these checks (e.g. you are committing to an external repository that does not use our coding standards), you will then need to pass `--no-verify` to your `git commit` commands to disable git hooks.
+
+#### Local configuration: convenience script
+
+There is a script, `r.bat`, in `./scripts` that will invoke ruff for convenience. Like the git hook, it respects repo-local `ruff.toml` files.
+
+After adding `c:\instrument\dev\reusable-workflows\scripts` to your `PATH`, it can be executed as:
+```
+r format --check
+r format
+r check
+```
+
+Unlike the git hook, this will check all files by default. You can pass the script an explicit list of files:
+```
+r format --check c:\path\to\some\file.py
+```
+
 ### Pyright
 The Pyright linter uses diff_cover and the [pyright diff-cover plugin](https://github.com/DiamondLightSource/pyright_diff_quality_plugin) to run pyright on files that have changed.
 
