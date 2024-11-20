@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: get Python version or use default.
         run: |
-          echo "PY_VER=${{ inputs.python-ver || '3.10' }}" >> $GITHUB_ENV
+          echo "PY_VER=${{ inputs.python-ver || '3.11' }}" >> $GITHUB_ENV
       - uses: actions/setup-python@v5
         with:
            python-version: ${{ env.PY_VER }}
@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: get Python version or use default.
         run: |
-          echo "PY_VER=${{ inputs.python-ver || '3.10' }}" >> $GITHUB_ENV
+          echo "PY_VER=${{ inputs.python-ver || '3.11' }}" >> $GITHUB_ENV
       - uses: actions/setup-python@v5
         with:
            python-version: ${{ env.PY_VER }}
