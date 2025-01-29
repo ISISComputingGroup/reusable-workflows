@@ -95,6 +95,19 @@ jobs:
 
 You also need to give "write" permission for github actions, this is done for each repository in the repo settings on Github. 
 
+To use with a different branch, use the `with` syntax to specify the branch name as `deploy-branch` ie. 
+
+```yaml
+name: sphinx
+on: [push, workflow_call]
+jobs:
+  call_sphinx_builder:
+    uses: ISISComputingGroup/reusable-workflows/.github/workflows/sphinx.yml@main
+    secrets: inherit
+    with:
+      deploy-branch: "master"
+```
+
 This workflow requires a `pyproject.toml` file containing a `doc` optional dependency section, like so: 
 
 ```toml
