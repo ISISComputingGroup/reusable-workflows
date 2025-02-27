@@ -51,7 +51,7 @@ jobs:
         if: success() || failure()  # Run the format check even if the previous check fails (but not always, as should not run on a failed build.)
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config ${{ env.CONFIG }}
   pyright:
-    runs-on: ubuntu-latest
+    runs-on: ${{inputs.runs-on}}
     steps:
       - name: get Python version or use default.
         run: |
