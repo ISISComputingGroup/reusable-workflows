@@ -15,18 +15,17 @@ on:
         required: false
         type: string
         default: ubuntu-latest
+env:
+    python-version: ${{ inputs.python-ver || '3.11' }}
 jobs:
   ruff:
     runs-on: ${{inputs.runs-on}}
     env: 
       CONFIG: .ibex-shared-workflows/ruff.toml
     steps:
-      - name: get Python version or use default.
-        run: |
-          echo "PY_VER=${{ inputs.python-ver || '3.11' }}" >> $GITHUB_ENV
       - uses: actions/setup-python@v5
         with:
-           python-version: ${{ env.PY_VER }}
+           python-version: ${{ env.python-version }}
       - run: pip install ruff
       - uses: actions/checkout@v4
         with:
@@ -53,12 +52,9 @@ jobs:
   pyright:
     runs-on: ${{inputs.runs-on}}
     steps:
-      - name: get Python version or use default.
-        run: |
-          echo "PY_VER=${{ inputs.python-ver || '3.11' }}" >> $GITHUB_ENV
       - uses: actions/setup-python@v5
         with:
-           python-version: ${{ env.PY_VER }}
+           python-version: ${{ env.python-version }}
       - run: pip install unittest-xml-reporting
       - uses: actions/checkout@v4
         with:
