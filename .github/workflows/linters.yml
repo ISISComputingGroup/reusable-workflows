@@ -12,7 +12,6 @@ on:
       requirements-path:
         required: false
         type: string
-        default: "requirements.txt"
       runs-on:
         required: false
         type: string
@@ -70,8 +69,11 @@ jobs:
       - name: install project dependencies (pyproject.toml)
         run: pip install .[dev]
         if: ${{ hashFiles('pyproject.toml') != ''}}
-      - name: install project dependencies (requirements file)
+      - name: install project dependencies (requirements.txt)
+        run: pip install -r requirements.txt
+        if: ${{ hashFiles('requirements.txt') != ''}}
+      - name: install project dependencies (explicit path)
         run: pip install -r ${{ inputs.requirements-path }}
-        if: ${{ inputs.requirements-path || '' != ''}}
+        if: ${{ inputs.requirements-path != ''}}
       - name: Run Pyright on changes
         run: diff-quality --violations=pyright --fail-under=100 --compare-branch ${{ inputs.compare-branch }}
