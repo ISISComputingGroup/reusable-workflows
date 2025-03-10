@@ -16,13 +16,8 @@ on:
         required: false
         type: string
         default: ubuntu-latest
-      constraints-file:
-        required: false
-        type: string
-        default: ''
 env:
     python-version: ${{ inputs.python-ver }}
-    PIP_CONSTRAINT: ${{ inputs.constraints-file }}
 jobs:
   ruff:
     runs-on: ${{inputs.runs-on}}
