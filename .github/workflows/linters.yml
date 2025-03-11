@@ -77,3 +77,21 @@ jobs:
         if: ${{ inputs.requirements-path != ''}}
       - name: Run Pyright on changes
         run: diff-quality --violations=pyright --fail-under=100 --compare-branch ${{ inputs.compare-branch }}
+  code-ql:
+    runs-on: ${{inputs.runs-on}}
+    timeout-minutes: 120
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+           python-version: ${{ env.python-version }}
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          build-mode: none
+          queries: +security-and-quality
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"
