@@ -25,6 +25,14 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build -E -a -W --keep-going doc _build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: |
+            _build
+          if-no-files-found: error
+          retention-days: 7
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', inputs.deploy-branch) }}
