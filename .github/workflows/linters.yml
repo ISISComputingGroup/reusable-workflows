@@ -24,7 +24,6 @@ jobs:
      env: 
       CONFIG: .ibex-shared-workflows/ruff.toml
      steps:
-      - run: checkout
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -33,13 +32,13 @@ jobs:
         uses: actions/checkout@v4
         if: ${{ hashFiles('ruff.toml') == ''}}
         with:
-         repository: ISISComputingGroup/reusable-workflows
-         path: .ibex-shared-workflows
-         # If a local config exists set the config to be the environment variable so it is properly used.
+          repository: ISISComputingGroup/reusable-workflows
+          path: .ibex-shared-workflows
+      # If a local config exists set the config to be the environment variable so it is properly used.
       - name: Use local config.
         if:  ${{ hashFiles('ruff.toml') != ''}}
         run: |
-             echo "CONFIG=ruff.toml" >> $GITHUB_ENV
+          echo "CONFIG=ruff.toml" >> $GITHUB_ENV
       - name: Changed Files
         run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty echo
       - name: Run Ruff Check on Changed Files
