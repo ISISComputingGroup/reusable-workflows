@@ -21,26 +21,32 @@ env:
 jobs:
   ruff:
      runs-on: ${{inputs.runs-on}}
+     env: 
+      CONFIG: .ibex-shared-workflows/ruff.toml
      steps:
-        - uses: astral-sh/ruff-action@v3
-        - name: Use default config
-          uses: actions/checkout@v4
-          if: ${{ hashFiles('ruff.toml') == ''}}
-          with:
-           repository: ISISComputingGroup/reusable-workflows
-           path: .ibex-shared-workflows
+      - run: checkout
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/ruff-action@v3
+      - name: Use default config
+        uses: actions/checkout@v4
+        if: ${{ hashFiles('ruff.toml') == ''}}
+        with:
+         repository: ISISComputingGroup/reusable-workflows
+         path: .ibex-shared-workflows
          # If a local config exists set the config to be the environment variable so it is properly used.
-        - name: Use local config.
-          if:  ${{ hashFiles('ruff.toml') != ''}}
-          run: |
+      - name: Use local config.
+        if:  ${{ hashFiles('ruff.toml') != ''}}
+        run: |
              echo "CONFIG=ruff.toml" >> $GITHUB_ENV
-        - name: Changed Files
-          run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty echo
-        - name: Run Ruff Check on Changed Files
-          run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config ${{ env.CONFIG }} --output-format=github
-        - name: Run Ruff Format Check on Changed Files 
-          if: success() || failure()  # Run the format check even if the previous check fails (but not always, as should not run on a failed build.)
-          run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config ${{ env.CONFIG }}
+      - name: Changed Files
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty echo
+      - name: Run Ruff Check on Changed Files
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff check --config ${{ env.CONFIG }} --output-format=github
+      - name: Run Ruff Format Check on Changed Files 
+        if: success() || failure()  # Run the format check even if the previous check fails (but not always, as should not run on a failed build.)
+        run: git diff ${{ inputs.compare-branch }}..HEAD --name-only --diff-filter=ACM -z "*.py" | xargs -0 --no-run-if-empty ruff format --check --config ${{ env.CONFIG }}
   pyright:
     runs-on: ${{inputs.runs-on}}
     steps:
