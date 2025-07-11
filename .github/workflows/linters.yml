@@ -24,10 +24,12 @@ jobs:
      env: 
       CONFIG: .ibex-shared-workflows/ruff.toml
      steps:
+      - uses: actions/setup-python@v5
+        with:
+           python-version: ${{ env.python-version }}
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: astral-sh/ruff-action@v3
       - name: Use default config
         uses: actions/checkout@v4
         if: ${{ hashFiles('ruff.toml') == ''}}
