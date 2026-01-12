@@ -21,7 +21,7 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: |
-          uv pip install .[doc]
+          uv sync --extra doc
       - name: Sphinx build
         run: |
           uv run sphinx-build -E -a -W --keep-going doc _build
@@ -41,4 +41,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _build/
           force_orphan: true
+
 
