@@ -15,18 +15,18 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: '3.13'
       - name: Install dependencies
         run: |
-          pip install .[doc]
+          uv pip install .[doc]
       - name: Sphinx build
         run: |
-          sphinx-build -E -a -W --keep-going doc _build
+          uv run sphinx-build -E -a -W --keep-going doc _build
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: documentation
           path: |
@@ -34,10 +34,11 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', inputs.deploy-branch) }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _build/
           force_orphan: true
+
