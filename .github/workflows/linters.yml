@@ -28,11 +28,12 @@ jobs:
         with:
            python-version: ${{ env.python-version }}      
       - run: pip install ruff
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          submodules: recursive
       - name: Use default config
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: ${{ hashFiles('ruff.toml') == ''}}
         with:
           repository: ISISComputingGroup/reusable-workflows
@@ -56,9 +57,10 @@ jobs:
         with:
            python-version: ${{ env.python-version }}
       - run: pip install unittest-xml-reporting
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
            fetch-depth: 0
+           submodules: recursive
       - name: install pyright
         run: pip install pyright
       - name: install diff_cover
@@ -85,7 +87,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
            python-version: ${{ env.python-version }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: github/codeql-action/init@v3
         with:
           languages: python
