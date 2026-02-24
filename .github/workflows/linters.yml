@@ -35,7 +35,6 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          #submodules: recursive
           submodules: ${{ inputs.clone-submodule }}
       - name: Use default config
         uses: actions/checkout@v6
