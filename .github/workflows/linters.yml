@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
            fetch-depth: 0
-           submodules: recursive
+           submodules: ${{ inputs.clone-submodule }}
       - name: install pyright
         run: pip install pyright
       - name: install diff_cover
