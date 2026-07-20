@@ -28,7 +28,7 @@ jobs:
      env: 
       CONFIG: .ibex-shared-workflows/ruff.toml
      steps:
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
            python-version: ${{ env.python-version }}      
       - run: pip install ruff
@@ -57,7 +57,7 @@ jobs:
   pyright:
     runs-on: ${{inputs.runs-on}}
     steps:
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
            python-version: ${{ env.python-version }}
       - run: pip install unittest-xml-reporting
@@ -91,7 +91,7 @@ jobs:
     permissions:
       security-events: write
     steps:
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
            python-version: ${{ env.python-version }}
       - uses: actions/checkout@v6
