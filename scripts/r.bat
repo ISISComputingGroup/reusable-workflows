@@ -7,7 +7,7 @@ if exist "%REUSABLE_WF_GITDIR%/../ruff.toml" (
 ) else (
   set "REUSABLE_WF_RUFF_CONFIG=%~dp0\..\ruff.toml"
 )
-c:\instrument\apps\Python3\scripts\ruff %* --config="%REUSABLE_WF_RUFF_CONFIG%"
+uvx ruff %* --config="%REUSABLE_WF_RUFF_CONFIG%"
 exit /b %errorlevel%
 
 :HAVE_0_ARGS
