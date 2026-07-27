@@ -32,12 +32,12 @@ jobs:
         with:
            python-version: ${{ env.python-version }}      
       - run: pip install ruff
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: ${{ inputs.clone-submodule }}
       - name: Use default config
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         if: ${{ hashFiles('ruff.toml') == ''}}
         with:
           repository: ISISComputingGroup/reusable-workflows
@@ -61,7 +61,7 @@ jobs:
         with:
            python-version: ${{ env.python-version }}
       - run: pip install unittest-xml-reporting
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
            fetch-depth: 0
            submodules: ${{ inputs.clone-submodule }}
@@ -94,7 +94,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
            python-version: ${{ env.python-version }}
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v4
         with:
           languages: python
