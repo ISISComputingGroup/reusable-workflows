@@ -50,7 +50,7 @@ ignore = [
     "N999",  # Ignore this because the repo itself would need to be renamed
 ]
 [lint.per-file-ignores]
-"{**/tests/**,/tests/**,**/*tests.py,tests/**,*tests.py,*test.py,**/*test.py,common_tests/**,test_*.py}" = [
+"{**/tests/**,/tests/**,**/*tests.py,tests/**,*tests.py,*test.py,**/*test.py,common_tests/**,**/common_tests/**,test_*.py}" = [
     "N802",
     "D100",
     "D101",
